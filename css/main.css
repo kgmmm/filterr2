@@ -1,0 +1,1 @@
+:root{--link-color:#000;--link-hover:#999}*,:after,:before{margin:0;padding:0;-webkit-box-sizing:border-box;box-sizing:border-box}body,html{min-height:100%}body{font-family:"Nunito",Sans-Serif;color:#000;background:#fff}a:not([class]){color:var(--link-color)}a:not([class]):hover{color:var(--link-hover)}

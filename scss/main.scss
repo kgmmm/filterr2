@@ -1,0 +1,31 @@
+:root {
+  --link-color: #000;
+  --link-hover: #999;
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Nunito", Sans-Serif;
+  color: #000;
+  background: #fff;
+}
+
+a:not([class]) {
+  color: var(--link-color);
+
+  &:hover {
+    color: var(--link-hover);
+  }
+}
