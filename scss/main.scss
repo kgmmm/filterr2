@@ -1,6 +1,12 @@
+@import "slider.scss";
+
 :root {
+  --main: #fefefe;
+  --color: #242930;
+  --acent: #0fb4ff;
+
   --link-color: #000;
-  --link-hover: #999;
+  --link-hover: #242930;
 }
 
 *,
@@ -19,13 +25,16 @@ body {
 body {
   font-family: "Nunito", Sans-Serif;
   color: #000;
-  background: #fff;
+  background: var(--main);
 }
 
 a:not([class]) {
   color: var(--link-color);
+  text-decoration: underline;
+  cursor: pointer;
 
   &:hover {
     color: var(--link-hover);
+    text-decoration: underline;
   }
 }
