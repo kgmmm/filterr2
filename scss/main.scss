@@ -33,7 +33,19 @@ body {
 body {
   font-family: "Nunito", Sans-Serif;
   color: #000;
-  background: var(--main);
+  background-color: #eee;
+  background-size: 100px 100px;
+  background-position: center;
+  background-image: conic-gradient(
+    #cdcdcd 25%,
+    transparent 25%,
+    transparent 50%,
+    #cdcdcd 50%,
+    #cdcdcd 75%,
+    transparent 75%,
+    transparent 100%
+  );
+  position: relative;
 }
 
 a:not([class]) {
@@ -62,10 +74,13 @@ a:not([class]) {
   transition: color var(--timing) ease-in-out;
 
   &:hover,
-  &:focus,
   &:focus-within {
     outline: none;
     color: var(--accent);
+  }
+
+  &:focus {
+    outline: none;
   }
 
   &::after {
@@ -93,7 +108,7 @@ header {
   padding-left: 15px;
   width: 100%;
   height: 50px;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -142,9 +157,9 @@ main {
   height: auto;
   display: grid;
   place-items: center;
-  position: absolute;
+  position: fixed;
   top: 50px;
-  bottom: 100px;
+  bottom: 50px;
   left: 0;
   right: 0;
   text-align: center;
@@ -165,62 +180,87 @@ main {
   }
 
   &.hasimg {
-    background-color: #eee;
-    background-size: 100px 100px;
-    background-position: center;
-    background-image: conic-gradient(
-      #cdcdcd 25%,
-      transparent 25%,
-      transparent 50%,
-      #cdcdcd 50%,
-      #cdcdcd 75%,
-      transparent 75%,
-      transparent 100%
-    );
+    background: transparent;
+    bottom: 100px;
 
-    & h1,
-    & h2 {
+    & * {
       display: none;
     }
   }
 }
 
+canvas#imgcanv {
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 50px;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+}
+
 div.controls {
   width: 100%;
   height: 100px;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
+  background: var(--main);
   display: grid;
   place-items: center;
   isolation: isolate;
+  transition: height var(--timing) ease-in-out;
+
+  &.empty {
+    height: 50px;
+
+    & div.controlsWrap {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+
+    & div.addEffect {
+      transform: translateY(-50px);
+      transition: none;
+    }
+  }
+
+  &.init {
+    & div.addEffect {
+      & button.addEffect {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
 
   & div.addEffect {
     width: 100%;
     height: 50px;
+    background: var(--main);
     display: grid;
     place-items: center;
     position: relative;
     z-index: 2;
+    transform: translateY(0);
+    transition: transform var(--timing) ease-in-out;
   }
 
   & div.controlsWrap {
     width: 100%;
     height: 50px;
     position: relative;
-    z-index: -1;
+    z-index: 1;
     isolation: isolate;
     box-shadow: 0 -1px 3px rgba(var(--shadow-color));
 
     &.slider {
       & div.effectsList {
-        transform: translateY(50px) translateX(-50%);
         pointer-events: none;
         opacity: 0;
       }
 
       & div.slider {
-        transform: translateY(-50px);
         pointer-events: auto;
         opacity: 1;
       }
@@ -236,23 +276,28 @@ div.controls {
       position: absolute;
       top: 0;
       left: 50%;
-      background: var(--grey);
       display: grid;
       place-items: center;
-      transform: translateY(0) translateX(-50%);
-      transition: transform var(--timing) ease-in-out,
-        opacity var(--timing) ease-in-out;
+      transform: translateX(-50%);
+      transition: opacity var(--timing) ease-in-out;
       opacity: 1;
 
       & ul#filterList {
+        padding: 0 2px;
+        max-width: 100vw;
         height: 50px;
         list-style-type: none;
         display: grid;
         place-items: center;
         grid-auto-flow: column;
+        grid-template-columns: repeat(auto-fit, 50px);
+        gap: 2px;
+        background: var(--grey);
+        overflow-y: hidden;
+        overflow-x: scroll;
+        user-select: none;
 
         & li.filterIcon {
-          margin: 0 1px;
           width: 50px;
           height: 50px;
           color: var(--color);
@@ -316,13 +361,6 @@ div.controls {
           &.filterIcon--Sepia {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23242930' class='bi bi-camera2' viewBox='0 0 16 16'%3E%3Cpath d='M5 8c0-1.657 2.343-3 4-3V4a4 4 0 0 0-4 4z'/%3E%3Cpath d='M12.318 3h2.015C15.253 3 16 3.746 16 4.667v6.666c0 .92-.746 1.667-1.667 1.667h-2.015A5.97 5.97 0 0 1 9 14a5.972 5.972 0 0 1-3.318-1H1.667C.747 13 0 12.254 0 11.333V4.667C0 3.747.746 3 1.667 3H2a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1h.682A5.97 5.97 0 0 1 9 2c1.227 0 2.367.368 3.318 1zM2 4.5a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0zM14 8A5 5 0 1 0 4 8a5 5 0 0 0 10 0z'/%3E%3C/svg%3E");
           }
-
-          &:first-of-type {
-            margin-left: 2px;
-          }
-          &:last-of-type {
-            margin-right: 2px;
-          }
         }
       }
     }
@@ -331,16 +369,14 @@ div.controls {
       width: 100%;
       height: 50px;
       position: absolute;
-      top: 50px;
+      top: 0;
       left: 0;
       display: grid;
       pointer-events: none;
       grid-auto-flow: column;
       grid-template-columns: 70px 1fr 70px;
       place-items: center;
-      transform: translateY(0);
-      transition: transform var(--timing) ease-in-out,
-        opacity var(--timing) ease-in-out;
+      transition: opacity var(--timing) ease-in-out;
       z-index: -1;
       opacity: 0;
 
@@ -388,10 +424,13 @@ div.controls {
       }
 
       &:hover,
-      &:focus,
       &:focus-within {
         outline: none;
         color: var(--accent);
+      }
+
+      &:focus {
+        outline: none;
       }
 
       & svg {
@@ -426,6 +465,7 @@ div.controls {
         border-radius: 5px;
         opacity: 65%;
         cursor: pointer;
+        user-select: none;
 
         &:hover,
         &:focus {
@@ -443,4 +483,31 @@ div.controls {
   to {
     opacity: 0;
   }
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border: 0px none var(--accent);
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track {
+  background: var(--grey);
+  border: 0px none var(--accent);
+  border-radius: 50px;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--grey);
 }

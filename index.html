@@ -46,33 +46,26 @@
       </form>
     </header>
 
-    <main>
+    <main id="main">
       <h1>Make sure you are&nbsp;using the&nbsp;latest version of your browser</h1>
-      <h2>This web-app is currently not suported in Safari</h2>
+      <h2>This web-app is currently not supported in Safari</h2>
     </main>
     <canvas id="imgcanv"></canvas>
 
-    <div class="controls">
-      <div class="controlsWrap">
+    <div class="controls init empty" id="controlsInit">
+      <div class="controlsWrap" id="sliderToggle">
         <div class="effectsList">
           <ul id="filterList">
-            <li class="filterIcon filterIcon--Brightness" data-filter="Brightness"></li>
-            <li class="filterIcon filterIcon--Contrast" data-filter="Contrast"></li>
-            <li class="filterIcon filterIcon--Grayscale" data-filter="Grayscale"></li>
-            <li class="filterIcon filterIcon--Hue-Rotate" data-filter="Hue-Rotate"></li>
-            <li class="filterIcon filterIcon--Invert" data-filter="Invert"></li>
-            <li class="filterIcon filterIcon--Saturate" data-filter="Saturate"></li>
-            <li class="filterIcon filterIcon--Sepia" data-filter="Sepia"></li>
           </ul>
         </div>
         <div class="slider">
-          <button data-label="Done" class="doneBtn btnLabel">
+          <button data-label="Done" class="doneBtn btnLabel" id="doneBtn">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
               <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
             </svg>
           </button>
           <input type="range" id="sliderControl" class="sliderControl" min="0" max="100" value="50" />
-          <button data-label="Remove" class="removeBtn btnLabel">
+          <button data-label="Remove" class="removeBtn btnLabel" id="removeBtn">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
               <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
             </svg>
@@ -86,17 +79,17 @@
           </svg>
         </button>
         <ul class="effects">
-          <li>Brightness</li>
-          <li>Contrast</li>
-          <li>Grayscale</li>
-          <li>Hue-Rotate</li>
-          <li>Invert</li>
-          <li>Saturate</li>
-          <li>Sepia</li>
+          <li class="filterChoice">Brightness</li>
+          <li class="filterChoice">Contrast</li>
+          <li class="filterChoice">Grayscale</li>
+          <li class="filterChoice">Hue-Rotate</li>
+          <li class="filterChoice">Invert</li>
+          <li class="filterChoice">Saturate</li>
+          <li class="filterChoice">Sepia</li>
         </ul>
       </div>
     </div>
     
-    <script src="/script.min.js" type="module"></script>
+    <script defer src="/script.min.js" type="module"></script>
   </body>
 </html>
