@@ -216,7 +216,7 @@ div.controls {
 
     & div.controlsWrap {
       transform: translateY(50px);
-      opacity: 0;
+      opacity: 0%;
     }
 
     & div.addEffect {
@@ -228,7 +228,7 @@ div.controls {
   &.init {
     & div.addEffect {
       & button.addEffect {
-        opacity: 0;
+        opacity: 0%;
         pointer-events: none;
       }
     }
@@ -256,18 +256,24 @@ div.controls {
 
     &.slider {
       & div.effectsList {
+        transform: translateY(50px) translateX(-50%);
         pointer-events: none;
-        opacity: 0;
+
+        & ul#filterList li.filterIcon::after {
+          transform: translateX(-50%);
+        }
       }
 
       & div.slider {
+        transform: translateY(0);
         pointer-events: auto;
-        opacity: 1;
       }
 
-      & ~ div.addEffect button.addEffect {
-        opacity: 0;
-        pointer-events: none;
+      & ~ div.addEffect {
+        & button.addEffect {
+          opacity: 0%;
+          pointer-events: none;
+        }
       }
     }
 
@@ -280,7 +286,6 @@ div.controls {
       place-items: center;
       transform: translateX(-50%);
       transition: opacity var(--timing) ease-in-out;
-      opacity: 1;
 
       & ul#filterList {
         padding: 0 2px;
@@ -314,8 +319,8 @@ div.controls {
             color: var(--accent);
 
             &::after {
-              opacity: 1;
-              animation: lifeSpan 1s linear forwards 1.5s;
+              opacity: 100%;
+              animation: lifeSpan 1s linear both 1.5s;
             }
           }
 
@@ -323,7 +328,6 @@ div.controls {
             content: attr(data-filter);
             padding: 10px 15px;
             width: 120px;
-            height: auto;
             color: var(--color);
             background: var(--main);
             border-radius: 50vw;
@@ -331,12 +335,12 @@ div.controls {
             display: grid;
             place-items: center;
             position: fixed;
-            bottom: 80px;
+            bottom: 120px;
             left: 50%;
             z-index: 998;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(50px);
             pointer-events: none;
-            opacity: 0;
+            opacity: 0%;
             transition: opacity var(--timing) ease-in-out;
           }
 
@@ -378,7 +382,7 @@ div.controls {
       place-items: center;
       transition: opacity var(--timing) ease-in-out;
       z-index: -1;
-      opacity: 0;
+      transform: translateY(50px);
 
       & input[type="range"]#sliderControl {
         width: 100%;
@@ -405,7 +409,7 @@ div.controls {
       position: relative;
       transition: color var(--timing) ease-in-out,
         opacity var(--timing) ease-in-out;
-      opacity: 1;
+      opacity: 100%;
       pointer-events: auto;
 
       &.open {
@@ -413,7 +417,7 @@ div.controls {
 
         & ~ ul.effects {
           transform: translateY(0px);
-          opacity: 1;
+          opacity: 100%;
           pointer-events: auto;
           box-shadow: 0 5px 15px rgba(var(--shadow-color)),
             0px 5px 5px rgba(var(--alt-shadow-color));
@@ -452,7 +456,7 @@ div.controls {
       box-shadow: 0 5px 5px rgba(var(--shadow-color)),
         0px 5px 10px rgba(var(--alt-shadow-color));
       transform: translateY(-40px);
-      opacity: 0;
+      opacity: 0%;
       pointer-events: none;
       transition: opacity var(--timing) ease-in-out,
         transform var(--timing) ease-in-out var(--timing);
@@ -477,11 +481,11 @@ div.controls {
 }
 
 @keyframes lifeSpan {
-  from {
-    opacity: 1;
+  0% {
+    opacity: 100%;
   }
-  to {
-    opacity: 0;
+  100% {
+    opacity: 0%;
   }
 }
 
