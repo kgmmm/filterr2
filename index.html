@@ -37,7 +37,7 @@
           </svg>
           <input type="file" accept="image/*" id="uploadBtn" name="uploadBtn" />
         </label>
-        <button data-label="Save" class="saveBtn btnLabel">
+        <button data-label="Save" class="saveBtn btnLabel" id="saveBtn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
             <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
@@ -82,13 +82,34 @@
           <li class="filterChoice">Brightness</li>
           <li class="filterChoice">Contrast</li>
           <li class="filterChoice">Grayscale</li>
-          <li class="filterChoice">Hue-Rotate</li>
+          <li class="filterChoice">HueRotate</li>
           <li class="filterChoice">Invert</li>
           <li class="filterChoice">Saturate</li>
           <li class="filterChoice">Sepia</li>
+          <div class="twoContainer">
+            <button class="resetAllBtn btnLabel" id="resetAllBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+              </svg>
+            </button>
+            <button class="presetsBtn btnLabel" id="presetsBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
+              </svg>
+            </button>
+          </div>
         </ul>
       </div>
     </div>
+
+    <div class="loader"></div>
+    <div class="resetModal" id="resetModal">
+      <h2>Are you sure you&nbsp;want to reset all&nbsp;filters?</h2>
+      <button class="resetModal__btn" id="modalCancelBtn">Cancel</button>
+      <button class="resetModal__btn" id="modalYesBtn">Yes</button>
+    </div>
+    <div class="shadow"></div>
     
     <script defer src="/script.min.js" type="module"></script>
   </body>
