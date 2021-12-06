@@ -223,7 +223,6 @@ div.controls {
 
     & div.addEffect {
       transform: translateY(-50px);
-      transition: none;
     }
   }
 
@@ -389,16 +388,18 @@ div.controls {
         transform: translateY(50px) translateX(-50%);
         pointer-events: none;
         opacity: 0%;
-
-        & ul#filterList li.filterIcon::after {
-          transform: translateX(-50%);
-        }
       }
 
       & div.slider {
         transform: translateY(0);
         pointer-events: auto;
         opacity: 100%;
+
+        & div.sliderIndicator {
+          transform: translateX(-50%);
+          opacity: 100%;
+          visibility: visible;
+        }
       }
 
       & ~ div.addEffect {
@@ -452,30 +453,6 @@ div.controls {
           &:focus {
             background-color: var(--main-highlight);
             color: var(--accent);
-
-            &::after {
-              opacity: 100%;
-              animation: lifeSpan 1s linear forwards 1.5s;
-            }
-          }
-
-          &::after {
-            content: attr(data-filter);
-            padding: 10px 15px;
-            width: 120px;
-            color: var(--color);
-            background: var(--main);
-            border-radius: 50vw;
-            box-shadow: 0 0 10px rgba(var(--shadow-color));
-            display: grid;
-            place-items: center;
-            position: fixed;
-            bottom: 110px;
-            left: 50%;
-            z-index: 898;
-            transform: translateX(-50%) translateY(50px);
-            pointer-events: none;
-            opacity: 0%;
           }
 
           &.filterIcon--Brightness {
@@ -521,6 +498,25 @@ div.controls {
 
       & input[type="range"]#sliderControl {
         width: 100%;
+      }
+
+      & div.sliderIndicator {
+        padding: 5px 10px;
+        width: auto;
+        height: 30px;
+        color: var(--main);
+        background: var(--accent);
+        border-radius: 5px;
+        position: absolute;
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        pointer-events: none;
+        user-select: none;
+        opacity: 0%;
+        visibility: hidden;
+        transition: opacity var(--timing) ease-in-out,
+          transform var(--timing) ease-in-out;
       }
     }
   }
@@ -647,21 +643,39 @@ div.resetModal {
   }
 }
 
+div.currentFilter {
+  padding: 5px 10px;
+  width: auto;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--color);
+  background: var(--main);
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 898;
+  transform: translateX(-50%);
+  opacity: 0%;
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity var(--timing) ease-in-out;
+
+  &.show {
+    opacity: 100%;
+    visibility: visible;
+  }
+}
+
 @keyframes loader {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes lifeSpan {
-  0% {
-    opacity: 100%;
-  }
-  100% {
-    opacity: 0%;
   }
 }
 
