@@ -3,8 +3,10 @@
 :root {
   --main: #fefefe;
   --grey: #eee;
+  --dark-grey: #ddd;
   --color: #242930;
   --accent: #0fb4ff;
+  --dark-accent: #006fa3;
   --main-highlight: #f2fbff;
 
   --link-color: #000;
@@ -310,7 +312,7 @@ div.controls {
       list-style-type: none;
       position: absolute;
       bottom: 60px;
-      z-index: 899;
+      z-index: 900;
       text-align: center;
       background: var(--grey);
       border-radius: 5px;
@@ -528,7 +530,7 @@ div.shadow {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 900;
+  z-index: 910;
   background: rgba(black, 45%);
   opacity: 0%;
   transition: opacity var(--timing) ease-in-out;
@@ -542,7 +544,7 @@ div.loader {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 901;
+  z-index: 920;
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 122.88 122.88'%3E%3Cpath d='M57.85,3.61a3.61,3.61,0,1,1,7.21,0V27.45a3.61,3.61,0,0,1-7.21,0V3.61ZM29.42,13.15a3.6,3.6,0,0,1,6.23-3.61L47.57,30.19a3.6,3.6,0,1,1-6.22,3.61L29.42,13.15ZM9.57,35.62a3.59,3.59,0,0,1,3.58-6.22L33.8,41.32a3.59,3.59,0,1,1-3.58,6.22L9.57,35.62ZM3.61,65a3.61,3.61,0,1,1,0-7.21H27.45a3.61,3.61,0,0,1,0,7.21Zm9.54,28.43a3.6,3.6,0,1,1-3.61-6.23L30.19,75.31a3.6,3.6,0,1,1,3.61,6.22L13.15,93.46Zm22.47,19.85a3.59,3.59,0,0,1-6.22-3.58L41.32,89.08a3.59,3.59,0,1,1,6.22,3.58L35.62,113.31Zm29.41,6a3.61,3.61,0,1,1-7.21,0V95.43a3.61,3.61,0,0,1,7.21,0v23.84Zm28.43-9.54a3.6,3.6,0,0,1-6.23,3.61L75.31,92.69a3.6,3.6,0,0,1,6.22-3.61l11.93,20.65Zm19.85-22.47a3.59,3.59,0,0,1-3.58,6.22L89.08,81.56a3.59,3.59,0,1,1,3.58-6.22l20.65,11.92Zm6-29.41a3.61,3.61,0,1,1,0,7.21H95.43a3.61,3.61,0,0,1,0-7.21Zm-9.54-28.43a3.6,3.6,0,0,1,3.61,6.23L92.69,47.57a3.6,3.6,0,0,1-3.61-6.22l20.65-11.93ZM87.26,9.57a3.59,3.59,0,1,1,6.22,3.58L81.56,33.8a3.59,3.59,0,1,1-6.22-3.58L87.26,9.57Z'/%3E%3C/svg%3E");
   opacity: 0%;
   pointer-events: none;
@@ -583,7 +585,7 @@ div.resetModal {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 902;
+  z-index: 915;
   transform: translate(-50%, -50%);
   background: var(--main);
   text-align: center;
@@ -628,7 +630,7 @@ div.resetModal {
     border: none;
     font-size: 1rem;
     font-weight: 400;
-    color: #006fa3;
+    color: var(--dark-accent);
     cursor: pointer;
     background: var(--grey);
 
@@ -656,7 +658,7 @@ div.currentFilter {
   position: fixed;
   left: 50%;
   bottom: 0;
-  z-index: 898;
+  z-index: 890;
   transform: translateX(-50%);
   opacity: 0%;
   visibility: hidden;
@@ -667,6 +669,321 @@ div.currentFilter {
   &.show {
     opacity: 100%;
     visibility: visible;
+  }
+}
+
+div.presetsMenu {
+  width: 320px;
+  max-height: 640px;
+  background: transparent; //
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 913;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    & ~ div.shadow {
+      opacity: 100%;
+      pointer-events: auto;
+    }
+  }
+
+  & div.menuContainer {
+    margin: 0 auto;
+    margin-bottom: 60px;
+    width: 275px;
+    max-height: 320px;
+    background: var(--main);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(var(--shadow-color)),
+      0px 5px 5px rgba(var(--alt-shadow-color));
+    display: grid;
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "img"
+      "content";
+
+    & div.imgWrapper {
+      margin: 10px;
+      width: auto;
+      height: auto;
+      position: relative;
+
+      &::after {
+        content: "Preview";
+        padding: 5px 10px;
+        width: auto;
+        height: auto;
+        background: var(--main);
+        border-radius: 10px 10px 0 0;
+        font-size: 0.8rem;
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      & img {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 5px;
+        object-fit: cover;
+      }
+    }
+
+    & div.menuContentWrapper {
+      width: 100%;
+      height: 100%;
+      grid-area: content;
+      display: grid;
+      grid-template-columns: 100% 100%;
+      grid-auto-flow: column;
+      overflow: hidden;
+
+      &.save {
+        & div.presetsContent {
+          transform: translateX(calc(-100% - 20px));
+        }
+        & div.saveContent {
+          transform: translateX(-100%);
+        }
+      }
+
+      & div.presetsContent {
+        margin: 10px;
+        width: auto;
+        height: auto;
+        max-height: 240px;
+        color: var(--color);
+        border: solid 1px rgba(var(--shadow-color));
+        border-radius: 3px;
+        transform: translateX(0%);
+        transition: transform var(--timing) ease-in-out;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        user-select: none;
+
+        & h3 {
+          padding: 3px 10px;
+          width: auto;
+          height: auto;
+          background: var(--dark-grey);
+          font-size: 0.9rem;
+          font-weight: 400;
+        }
+
+        & ul {
+          padding-bottom: 1px;
+          width: 100%;
+          list-style-type: none;
+          background: var(--dark-grey);
+
+          & li {
+            margin: 1px 0;
+            padding: 10px 18px;
+            width: 100%;
+            height: auto;
+            background-color: var(--main);
+            font-weight: 300;
+            font-size: 1rem;
+            cursor: pointer;
+            display: grid;
+            grid-auto-flow: column;
+            align-items: center;
+            justify-content: start;
+            position: relative;
+            transition: background-color var(--timing) ease-in-out;
+
+            &:hover {
+              background-color: var(--grey);
+            }
+
+            &.active {
+              font-weight: 500;
+              background-color: var(--grey);
+              cursor: auto;
+            }
+
+            &.userPreset {
+              padding: 0;
+              grid-template-columns: 1fr 42px;
+
+              & span {
+                display: block;
+                padding: 10px 18px;
+                padding-right: 15px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+
+              & button.userPresetDelete {
+                width: 100%;
+                height: 100%;
+                color: var(--color);
+                background: transparent;
+                border: none;
+                display: grid;
+                place-items: center;
+                cursor: pointer;
+                transition: color var(--timing) ease-in-out;
+
+                &:hover {
+                  color: var(--accent);
+                }
+
+                & svg {
+                  width: 45%;
+                  height: 45%;
+                  fill: currentColor;
+                }
+              }
+            }
+          }
+        }
+
+        & button.userPresetAdd {
+          width: 100%;
+          height: 30px;
+          background: var(--main);
+          border: none;
+          cursor: pointer;
+          display: grid;
+          place-items: center;
+          transition: color var(--timing) ease-in-out;
+
+          &:hover {
+            color: var(--accent);
+          }
+
+          & svg {
+            width: auto;
+            height: 95%;
+            fill: currentColor;
+          }
+        }
+      }
+
+      & div.saveContent {
+        width: auto;
+        height: auto;
+        max-height: 260px;
+        color: var(--color);
+        border-radius: 3px;
+        display: grid;
+        grid-template-rows: 50px 1fr 50px;
+        grid-template-columns: 50px 1fr 50px;
+        transform: translateX(0%);
+        transition: transform var(--timing) ease-in-out;
+
+        & input[type="text"].newPresetName {
+          margin: 10px 0px 7px 10px;
+          padding: 0 10px;
+          grid-column: 1 / 3;
+          border: solid 2px var(--accent);
+          border-radius: 3px;
+          color: var(--color);
+          font-size: 0.8rem;
+
+          &:focus {
+            outline: solid 2px black;
+          }
+        }
+
+        & span.newPresetPrint {
+          margin: 0 10px;
+          padding: 10px;
+          height: 100%;
+          display: block;
+          grid-column: 1 / 4;
+          color: rgba(black, 45%);
+          background: var(--grey);
+          border-radius: 3px;
+          overflow-y: scroll;
+          overflow-x: hidden;
+          font-size: 0.7em;
+          font-family: "Courier New", Courier, monospace;
+        }
+
+        & button {
+          margin: 7px 7px 10px 10px;
+          display: grid;
+          grid-auto-flow: column;
+          place-items: center;
+          color: var(--accent);
+          background-color: transparent;
+          border: solid 2px var(--accent);
+          border-radius: 3px;
+          cursor: pointer;
+          font-size: 0.9rem;
+          font-weight: 500;
+
+          & svg {
+            width: auto;
+            height: 60%;
+            fill: currentColor;
+          }
+
+          &.userPresetSaveBtn {
+            margin: 7px 10px 10px 0px;
+            color: var(--main);
+            background-color: var(--accent);
+            grid-column: 2 / 4;
+          }
+
+          &.previewToggle {
+            margin: 10px 10px 7px 7px;
+            color: var(--main);
+            background-color: var(--accent);
+
+            & svg.off {
+              display: none;
+            }
+
+            &.previewOff {
+              & svg.on {
+                display: none;
+              }
+              & svg.off {
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  & button.presetsCloseBtn {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--main);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color var(--timing) ease-in-out;
+
+    & svg {
+      width: 60%;
+      height: 60%;
+      fill: currentColor;
+      filter: drop-shadow(0px 0px 3px rgba(var(--shadow-color)));
+    }
   }
 }
 

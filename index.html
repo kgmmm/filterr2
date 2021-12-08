@@ -104,6 +104,76 @@
       </div>
     </div>
 
+    <div class="presetsMenu open">
+      <div class="menuContainer">
+        <div class="imgWrapper">
+          <img id="presetPreviewImg" src="https://images.unsplash.com/photo-1637722873821-3196d8c0f74f?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzODgyNDk5Nw&ixlib=rb-1.2.1&q=85" alt="Placeholder" />
+        </div>
+        <div class="menuContentWrapper">
+          <div class="presetsContent">
+            <h3>Presets</h3>
+            <ul id="presetsList">
+              <li>List Item</li>
+              <li>List Item</li>
+              <li class="active">List Item</li>
+              <li>List Item</li>
+              <li>List Item</li>
+              <h3>User Presets</h3>
+              <li class="userPreset">
+                <span>List Itemasdasdasdasdasdsd</span>
+                <button class="userPresetDelete" id="userPresetDelete">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </button>
+              </li>
+              <li class="userPreset active">
+                <span>List Item</span>
+                <button class="userPresetDelete" id="userPresetDelete">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </button>
+              </li>
+            </ul>
+            <button class="userPresetAdd" id="userPresetAdd">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="saveContent">
+            <input type="text" class="newPresetName" id="newPresetName" placeholder="New Preset Name..." />
+            <button class="previewToggle" id="previewToggle">
+              <svg class="on" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+              </svg>
+              <svg class="off" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+              </svg>
+            </button>
+            <span class="newPresetPrint" id="newPresetPrint">Saturate(37%) Contrast(128%) Saturate(149%) Hue-Rotate(258deg) Saturate(37%) Contrast(128%) Saturate(149%) Hue-Rotate(258deg) Saturate(37%) Contrast(128%) Saturate(149%) Hue-Rotate(258deg) Saturate(37%) Contrast(128%) Saturate(149%) Hue-Rotate(258deg) Saturate(37%) Contrast(128%) Saturate(149%) Hue-Rotate(258deg) Saturate(37%) Contrast(128%) Saturate(149%) Hue-Rotate(258deg)</span>
+            <button class="userPresetBackBtn" id="userPresetBackBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              </svg>
+            </button>
+            <button class="userPresetSaveBtn" id="userPresetSaveBtn">
+              Save Preset
+            </button>
+          </div>
+        </div>
+      </div>
+      <button class="presetsCloseBtn" id="presetsCloseBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+        </svg>
+      </button>
+    </div>
+
     <div class="loader"></div>
     <div class="resetModal" id="resetModal">
       <h2>Are you sure you&nbsp;want to reset all&nbsp;filters?</h2>
