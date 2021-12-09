@@ -13,3 +13,4 @@ In spite of poor support around `CanvasRenderingContext2D.Filter` (Safari) I've 
 - https://github.com/kgmmm/filterr
 - https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
 - https://gist.github.com/remy/784508
+- https://icons.getbootstrap.com/
