@@ -675,12 +675,16 @@ div.currentFilter {
 div.presetsMenu {
   width: 320px;
   max-height: 640px;
-  background: transparent; //
+  background: transparent;
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 913;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--timing) ease-in-out;
 
   &.open {
     opacity: 1;
@@ -819,6 +823,18 @@ div.presetsMenu {
               padding: 0;
               grid-template-columns: 1fr 42px;
 
+              &.placeholder {
+                cursor: auto;
+
+                & span {
+                  font-style: italic;
+                }
+
+                &:hover {
+                  background-color: var(--main);
+                }
+              }
+
               & span {
                 display: block;
                 padding: 10px 18px;
@@ -885,7 +901,7 @@ div.presetsMenu {
         display: grid;
         grid-template-rows: 40px 1fr 40px;
         grid-template-columns: 40px 1fr 40px;
-        gap: 7px; //
+        gap: 7px;
         transform: translateX(0%);
         transition: transform var(--timing) ease-in-out;
 

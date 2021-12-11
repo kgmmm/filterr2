@@ -104,7 +104,7 @@
       </div>
     </div>
 
-    <div class="presetsMenu open">
+    <div class="presetsMenu" id="presetsMenu">
       <div class="menuContainer">
         <div class="imgWrapper">
           <img id="presetPreviewImg" src="https://images.unsplash.com/photo-1637722873821-3196d8c0f74f?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzODgyNDk5Nw&ixlib=rb-1.2.1&q=85" alt="Placeholder" />
@@ -113,11 +113,11 @@
           <div class="presetsContent">
             <h3>Presets</h3>
             <ul id="presetsList">
-              <li>List Item</li>
-              <li>List Item</li>
-              <li class="active">List Item</li>
-              <li>List Item</li>
-              <li>List Item</li>
+              <li id="preset" data-presetID="stainedOldPhoto">Stained Old Photo</li>
+              <li id="preset" data-presetID="">List Item</li>
+              <li id="preset" data-presetID="">List Item</li>
+              <li id="preset" data-presetID="">List Item</li>
+              <li id="preset" data-presetID="">List Item</li>
               <h3>User Presets</h3>
               <li class="userPreset">
                 <span>List Itemasdasdasdasdasdsd</span>
@@ -127,13 +127,16 @@
                   </svg>
                 </button>
               </li>
-              <li class="userPreset active">
+              <li class="userPreset">
                 <span>List Item</span>
                 <button class="userPresetDelete" id="userPresetDelete">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                   </svg>
                 </button>
+              </li>
+              <li class="userPreset placeholder" id="userPresetPlaceholder">
+                <span>None</span>
               </li>
             </ul>
             <button class="userPresetAdd" id="userPresetAdd">

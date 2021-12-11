@@ -273,15 +273,15 @@ doneBtn.addEventListener('click', function() {
 function constructFilters() {
   if(Object.keys(filters).length > 0) {
     for(var key in filters) {
-      const filterName = filters[key][0],
-            filterValue = filters[key][1],
-            unit = '%';
+      var filterName = filters[key][0],
+          filterValue = filters[key][1],
+          unit = '%';
 
       if(filterName === 'HueRotate') {
-        constructed[target] = 'Hue-Rotate(' + filterValue +  'deg)';
+        constructed[key] = 'Hue-Rotate(' + filterValue +  'deg)';
         applyFilters();
       } else {
-        constructed[target] = filterName + '(' + filterValue + unit + ')';
+        constructed[key] = filterName + '(' + filterValue + unit + ')';
         applyFilters();
       };
     };
@@ -470,13 +470,55 @@ modalYesBtn.addEventListener('click', function() {
   resetModal.classList.remove('open');
 }, false);
 
-  const presetsBtn = document.getElementById('presetsBtn');
+var getSiblings = function (elem) {
+	return Array.prototype.filter.call(elem.parentNode.children, function (sibling) {
+		return sibling !== elem;
+	});
+};
 
-  presetsBtn.addEventListener('click', function() {
-    const constructedPre = Object.values(constructed),
-          constructedString = constructedPre.join(' ');
+var presets = {
+      stainedOldPhoto: 'Sepia(70%) Contrast(110%) Brightness(120%)'
+    },
+    userPresets = {};
 
-    console.log(constructedString);
-    navigator.clipboard.writeText(constructedString);
-    alert("Copied: " + constructedString);
+const presetsBtn = document.getElementById('presetsBtn'),
+      presetsMenu = document.getElementById('presetsMenu'),
+      presetListItems = document.querySelectorAll('li#preset');
+
+presetsBtn.addEventListener('click', function() {
+  addEffectBtn.classList.remove('open');
+  controlsDiv.classList.add('init');
+  presetsMenu.classList.add('open');
+
+  // if no filters selected- dont show the ADD button.
+
+  // populate user presets from local storage
+  // if none- leave placeholder there
+  // if any- remove placehold, populate user presets
+}, false);
+
+presetListItems.forEach(item => {
+  item.addEventListener('click', function() {
+    if(item.classList.contains('active')) {
+      return false;
+    }
+    const presetID = item.getAttribute('data-presetID');
+
+    item.classList.add('active');
+
+    var siblings = getSiblings(item);
+
+    siblings.forEach(sibling => {
+      sibling.classList.remove('active');
+    });
+
+    console.log(presets[presetID]);
   }, false);
+});
+
+const presetsCloseBtn = document.getElementById('presetsCloseBtn');
+
+presetsCloseBtn.addEventListener('click', function() {
+  controlsDiv.classList.remove('init');
+  presetsMenu.classList.remove('open');
+}, false);
