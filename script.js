@@ -491,15 +491,14 @@ var presets = {
 const presetsBtn = document.getElementById('presetsBtn'),
       presetsMenu = document.getElementById('presetsMenu'),
       presetListItems = document.querySelectorAll('li#preset'),
-      userPresetNewBtn = document.getElementById('userPresetNewBtn');
+      userPresetNewBtn = document.getElementById('userPresetNewBtn'),
+      menuContentWrapper = document.getElementById('menuContentWrapper');
 
 presetsBtn.addEventListener('click', function() {
-  const iconsExist = document.querySelectorAll('.filterIcon');
-  
-  if(iconsExist.length === 0) {
-    userPresetNewBtn.style.display = 'none';
-  } else {
+  if(Object.keys(constructed).length > 0) {
     userPresetNewBtn.style.display = 'grid';
+  } else {
+    userPresetNewBtn.style.display = 'none';
   };
 
   addEffectBtn.classList.remove('open');
@@ -537,9 +536,28 @@ presetListItems.forEach(item => {
   }, false);
 });
 
+const newPresetPrint = document.getElementById('newPresetPrint');
+
+userPresetNewBtn.addEventListener('click', function() {
+  const rawConstructed = Object.values(constructed),
+        fullString = rawConstructed.join(' ');
+
+  newPresetPrint.innerHTML = fullString;
+  menuContentWrapper.classList.add('save');
+}, false);
+
+const userPresetBackBtn = document.getElementById('userPresetBackBtn');
+
+userPresetBackBtn.addEventListener('click', function() {
+  menuContentWrapper.classList.remove('save');
+}, false);
+
+
+
 const presetsCloseBtn = document.getElementById('presetsCloseBtn');
 
 presetsCloseBtn.addEventListener('click', function() {
   controlsDiv.classList.remove('init');
   presetsMenu.classList.remove('open');
+  menuContentWrapper.classList.remove('save');
 }, false);

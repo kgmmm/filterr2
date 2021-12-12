@@ -221,6 +221,7 @@ div.controls {
     & div.controlsWrap {
       transform: translateY(50px);
       opacity: 0%;
+      visibility: hidden;
     }
 
     & div.addEffect {
@@ -234,6 +235,7 @@ div.controls {
       & button.resetAllBtn,
       & button.presetsBtn {
         opacity: 0%;
+        visibility: hidden;
         pointer-events: none;
       }
     }
@@ -266,6 +268,7 @@ div.controls {
       cursor: pointer;
       position: relative;
       opacity: 100%;
+      visibility: visible;
       transition: color var(--timing) ease-in-out,
         opacity var(--timing) ease-in-out;
       pointer-events: auto;
@@ -322,8 +325,6 @@ div.controls {
       opacity: 0%;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity var(--timing) ease-in-out,
-        transform var(--timing) ease-in-out var(--timing);
 
       @media screen and (max-height: 500px) {
         height: 60vh;
@@ -390,12 +391,14 @@ div.controls {
         transform: translateY(50px) translateX(-50%);
         pointer-events: none;
         opacity: 0%;
+        visibility: hidden;
       }
 
       & div.slider {
         transform: translateY(0);
         pointer-events: auto;
         opacity: 100%;
+        visibility: visible;
 
         & div.sliderIndicator {
           transform: translateX(-50%);
@@ -409,6 +412,7 @@ div.controls {
         & button.resetAllBtn,
         & button.presetsBtn {
           opacity: 0%;
+          visibility: hidden;
           pointer-events: none;
         }
       }
@@ -424,6 +428,7 @@ div.controls {
       transform: translateX(-50%);
       transition: opacity var(--timing) ease-in-out;
       opacity: 100%;
+      visibility: visible;
 
       & ul#filterList {
         padding: 0 2px;
@@ -497,6 +502,7 @@ div.controls {
       z-index: -1;
       transform: translateY(50px);
       opacity: 0%;
+      visibility: hidden;
 
       & input[type="range"]#sliderControl {
         width: 100%;
@@ -533,7 +539,9 @@ div.shadow {
   z-index: 910;
   background: rgba(black, 45%);
   opacity: 0%;
-  transition: opacity var(--timing) ease-in-out;
+  visibility: hidden;
+  transition: opacity var(--timing) ease-in-out,
+    visibility var(--timing) ease-in-out;
   pointer-events: none;
 }
 
@@ -567,6 +575,7 @@ div.loader {
 
   &.show {
     opacity: 100%;
+    visibility: visible;
 
     &::before {
       animation-play-state: running;
@@ -574,6 +583,7 @@ div.loader {
 
     & ~ div.shadow {
       opacity: 100%;
+      visibility: visible;
       pointer-events: auto;
     }
   }
@@ -613,6 +623,7 @@ div.resetModal {
 
     & ~ div.shadow {
       opacity: 100%;
+      visibility: visible;
       pointer-events: auto;
     }
   }
@@ -681,18 +692,20 @@ div.presetsMenu {
   left: 50%;
   transform: translateX(-50%);
   z-index: 913;
-  opacity: 0;
+  opacity: 0%;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity var(--timing) ease-in-out;
+  transition: opacity var(--timing) ease-in-out,
+    visibility var(--timing) ease-in-out;
 
   &.open {
-    opacity: 1;
+    opacity: 100%;
     visibility: visible;
     pointer-events: auto;
 
     & ~ div.shadow {
       opacity: 100%;
+      visibility: visible;
       pointer-events: auto;
     }
   }
@@ -758,9 +771,11 @@ div.presetsMenu {
       &.save {
         & div.presetsContent {
           transform: translateX(calc(-100% - 20px));
+          visibility: hidden;
         }
         & div.saveContent {
           transform: translateX(-100%);
+          visibility: visible;
         }
       }
 
@@ -773,7 +788,8 @@ div.presetsMenu {
         border: solid 1px rgba(var(--shadow-color));
         border-radius: 3px;
         transform: translateX(0%);
-        transition: transform var(--timing) ease-in-out;
+        transition: transform var(--timing) ease-in-out,
+          visibility var(--timing) ease-in-out;
         overflow-y: scroll;
         overflow-x: hidden;
         user-select: none;
@@ -903,7 +919,9 @@ div.presetsMenu {
         grid-template-columns: 40px 1fr 40px;
         gap: 7px;
         transform: translateX(0%);
-        transition: transform var(--timing) ease-in-out;
+        transition: transform var(--timing) ease-in-out,
+          visibility var(--timing) ease-in-out;
+        visibility: hidden;
 
         & input[type="text"].newPresetName {
           padding: 0 10px;
