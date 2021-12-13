@@ -9,7 +9,8 @@ var filters = {},
       Sepia: [0, 100, 0]
     },
     constructed = {},
-    target;
+    target,
+    webname = 'filterr';
 const sliderControl = document.getElementById('sliderControl');
 
 const addEffectBtn = document.getElementById('addEffectBtn');
@@ -483,9 +484,9 @@ modalYesBtn.addEventListener('click', function() {
 }, false);
 
 var getSiblings = function (elem) {
-	return Array.prototype.filter.call(elem.parentNode.children, function (sibling) {
-		return sibling !== elem;
-	});
+  return Array.prototype.filter.call(elem.parentNode.children, function (sibling) {
+    return sibling !== elem;
+  });
 };
 
 var presets = {
@@ -496,8 +497,10 @@ var presets = {
 
 const presetsBtn = document.getElementById('presetsBtn'),
       presetsMenu = document.getElementById('presetsMenu'),
+      presetsList = document.getElementById('presetsList'),
       presetListItems = document.querySelectorAll('li#preset'),
       userPresetNewBtn = document.getElementById('userPresetNewBtn'),
+      userPresetPlaceholder = document.getElementById('userPresetPlaceholder'),
       menuContentWrapper = document.getElementById('menuContentWrapper');
 
 presetsBtn.addEventListener('click', function() {
@@ -525,22 +528,40 @@ presetsBtn.addEventListener('click', function() {
 
 presetListItems.forEach(item => {
   item.addEventListener('click', function() {
-    if(item.classList.contains('active') || item.classList.contains('placeholder')) {
-      return false;
-    }
-    const presetID = item.getAttribute('data-presetID');
-
-    item.classList.add('active');
-
-    var siblings = getSiblings(item);
-
-    siblings.forEach(sibling => {
-      sibling.classList.remove('active');
-    });
-
-    console.log(presets[presetID]); // preview the filter
+    listItemClick(item);
   }, false);
 });
+
+function listItemClick(item) {
+  if(item.classList.contains('active') || item.classList.contains('placeholder')) {
+    return false;
+  }
+  const presetID = item.getAttribute('data-presetID');
+
+  item.classList.add('active');
+
+  var siblings = getSiblings(item);
+
+  siblings.forEach(sibling => {
+    sibling.classList.remove('active');
+  });
+
+  console.log(presetID); // preview the filter
+};
+
+const newPresetNameInput = document.getElementById('newPresetName'),
+      userPresetSaveBtn = document.getElementById('userPresetSaveBtn');
+
+newPresetNameInput.addEventListener('input', checkName, false);
+newPresetNameInput.addEventListener('change', checkName, false);
+
+function checkName() {
+  if(newPresetNameInput.value != '') {
+    userPresetSaveBtn.classList.remove('disabled');
+  } else {
+    userPresetSaveBtn.classList.add('disabled');
+  };
+};
 
 const newPresetPrint = document.getElementById('newPresetPrint');
 
@@ -558,7 +579,58 @@ userPresetBackBtn.addEventListener('click', function() {
   menuContentWrapper.classList.remove('save');
 }, false);
 
+userPresetSaveBtn.addEventListener('click', function() {
+  const newPresetName = document.getElementById('newPresetName').value,
+        newPresetString = Object.values(constructed).join(' ');
 
+  if(userPresetSaveBtn.classList.contains('disabled')) {
+    return false;
+  } else {
+    localStorage.setItem(webname + 'USRPRE' + newPresetName, newPresetString);
+    menuContentWrapper.classList.remove('save');
+    document.getElementById('newPresetName').value = '';
+    newPresetPrint.innerHTML = '';
+    createNewUSRPRE(newPresetName, newPresetString);
+  };
+}, false);
+
+function createNewUSRPRE(name, string) {
+  const newLi = document.createElement('li');
+
+  if(userPresetPlaceholder.classList.contains('visible')) {
+    userPresetPlaceholder.classList.remove('visible');
+  };
+
+  newLi.setAttribute('id', 'preset');
+  newLi.classList.add('userPreset');
+  newLi.setAttribute('data-presetID', name);
+  newLi.innerHTML = '<span>' + name + '</span><button class="userPresetDelete" id="userPresetDelete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></button>';
+  newLi.addEventListener('click', function() { listItemClick(this) }, false);
+  newLi.querySelector('.userPresetDelete').addEventListener('click', function() { deleteUserLi(this) }, false);
+  presetsList.appendChild(newLi);
+};
+
+const userPresetDeleteBtns = document.querySelectorAll('.userPresetDelete');
+
+userPresetDeleteBtns.forEach(btn => {
+  btn.addEventListener('click', function() {
+    deleteUserLi(btn);
+  }, false);
+});
+
+function deleteUserLi(btn) {
+  const parentLi = btn.parentNode,
+        liCount = document.querySelectorAll('.userPreset');
+
+  parentLi.classList.add('active');
+
+  if(liCount.length < 3) {
+    presetsList.removeChild(parentLi);
+    userPresetPlaceholder.classList.add('visible');
+  } else {
+    presetsList.removeChild(parentLi);
+  };
+};
 
 const presetsCloseBtn = document.getElementById('presetsCloseBtn');
 

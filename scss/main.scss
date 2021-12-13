@@ -108,6 +108,17 @@ a:not([class]) {
   }
 }
 
+.disabled {
+  background: var(--grey) !important;
+  color: rgba(var(--shadow-color)) !important;
+  cursor: not-allowed !important;
+  border-color: var(--dark-grey) !important;
+
+  &:hover {
+    color: rgba(var(--shadow-color)) !important;
+  }
+}
+
 header {
   padding-left: 15px;
   width: 100%;
@@ -362,12 +373,6 @@ div.controls {
           width: 100%;
           height: 100%;
           border-radius: 0;
-
-          &.resetAllBtn.disabled {
-            background: var(--grey);
-            color: rgba(var(--shadow-color));
-            cursor: not-allowed;
-          }
 
           & svg {
             margin: 0;
@@ -850,6 +855,11 @@ div.presetsMenu {
 
               &.placeholder {
                 cursor: auto;
+                display: none;
+
+                &.visible {
+                  display: block;
+                }
 
                 & span {
                   font-style: italic;
