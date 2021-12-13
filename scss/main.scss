@@ -746,16 +746,19 @@ div.presetsMenu {
         transform: translateX(-50%);
       }
 
-      & img {
+      & div.presetPreviewImg {
         width: 100%;
-        height: auto;
-        max-height: 300px;
+        height: 300px;
         position: absolute;
         bottom: -10px;
         left: 50%;
         transform: translateX(-50%);
         border-radius: 5px;
-        object-fit: cover;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+
+        background-image: url(https://images.unsplash.com/photo-1637722873821-3196d8c0f74f?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzODgyNDk5Nw&ixlib=rb-1.2.1&q=85);
       }
     }
 
