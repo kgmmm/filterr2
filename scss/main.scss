@@ -363,6 +363,12 @@ div.controls {
           height: 100%;
           border-radius: 0;
 
+          &.resetAllBtn.disabled {
+            background: var(--grey);
+            color: rgba(var(--shadow-color));
+            cursor: not-allowed;
+          }
+
           & svg {
             margin: 0;
           }

@@ -15,7 +15,13 @@ const sliderControl = document.getElementById('sliderControl');
 const addEffectBtn = document.getElementById('addEffectBtn');
 
 addEffectBtn.addEventListener('click', () => {
-  addEffectBtn.classList.toggle('open');
+  if(Object.keys(constructed).length > 0) {
+    resetAllBtn.classList.remove('disabled');
+    addEffectBtn.classList.toggle('open');
+  } else {
+    resetAllBtn.classList.add('disabled');
+    addEffectBtn.classList.toggle('open');
+  }
 });
 
 var resizeEvt;
