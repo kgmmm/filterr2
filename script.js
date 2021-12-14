@@ -9,8 +9,7 @@ var filters = {},
       Sepia: [0, 100, 0]
     },
     constructed = {},
-    target,
-    webname = 'filterr';
+    target;
 const sliderControl = document.getElementById('sliderControl');
 
 const addEffectBtn = document.getElementById('addEffectBtn');
@@ -519,11 +518,13 @@ presetsBtn.addEventListener('click', function() {
     };
   });
 
-  presetsMenu.classList.add('open');
+  for(var key in localStorage) {
+    if(key.substring(0, 6) == 'USRPRE') {
+      createNewUSRPRE(key.substring(6), localStorage[key]);
+    };
+  };
 
-  // populate user presets from local storage
-  // if none- leave placeholder there
-  // if any- remove placeholder, populate user presets
+  presetsMenu.classList.add('open');
 }, false);
 
 presetListItems.forEach(item => {
@@ -586,7 +587,7 @@ userPresetSaveBtn.addEventListener('click', function() {
   if(userPresetSaveBtn.classList.contains('disabled')) {
     return false;
   } else {
-    localStorage.setItem(webname + 'USRPRE' + newPresetName, newPresetString);
+    localStorage.setItem('USRPRE' + newPresetName, newPresetString);
     menuContentWrapper.classList.remove('save');
     document.getElementById('newPresetName').value = '';
     newPresetPrint.innerHTML = '';
@@ -620,9 +621,11 @@ userPresetDeleteBtns.forEach(btn => {
 
 function deleteUserLi(btn) {
   const parentLi = btn.parentNode,
-        liCount = document.querySelectorAll('.userPreset');
+        liCount = document.querySelectorAll('.userPreset'),
+        presetToDelete = parentLi.getAttribute('data-presetID');
 
   parentLi.classList.add('active');
+  localStorage.removeItem('USRPRE' + presetToDelete);
 
   if(liCount.length < 3) {
     presetsList.removeChild(parentLi);
