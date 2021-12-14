@@ -16,6 +16,8 @@
   --alt-shadow-color: 15, 180, 255, 20%;
 
   --timing: 0.2s;
+
+  color-scheme: light;
 }
 
 *,
@@ -948,6 +950,7 @@ div.presetsMenu {
           border: solid 2px var(--accent);
           border-radius: 3px;
           color: var(--color);
+          background: white;
           font-size: 0.8rem;
 
           &:focus {

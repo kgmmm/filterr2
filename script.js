@@ -571,6 +571,7 @@ userPresetNewBtn.addEventListener('click', function() {
         fullString = rawConstructed.join(' ');
 
   newPresetPrint.innerHTML = fullString;
+  newPresetNameInput.value = '';
   menuContentWrapper.classList.add('save');
 }, false);
 
