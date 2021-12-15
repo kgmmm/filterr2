@@ -3,7 +3,7 @@
   "background_color" : "#fefefe",
   "display" : "fullscreen",
   "scope" : "/",
-  "start_url" : "/",
+  "start_url" : "filterr2/",
   "name" : "filterr",
   "short_name" : "filterr",
   "description" : "Apply filters to your images. Choose from curated presets or create your own presets.",
