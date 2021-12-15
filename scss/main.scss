@@ -1072,8 +1072,15 @@ div.presetsMenu {
 
 @media screen and (max-height: 640px) and (min-aspect-ratio: 13/9) {
   div.presetsMenu {
-    width: 100%;
+    width: 550px;
     height: 100%;
+
+    & button.presetsCloseBtn {
+      right: -50px;
+      left: auto;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
     & div.menuContainer {
       width: 550px;
@@ -1081,6 +1088,10 @@ div.presetsMenu {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
       grid-template-areas: "img content";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
       & div.imgWrapper {
         margin: 0;
@@ -1088,7 +1099,12 @@ div.presetsMenu {
         height: 100%;
 
         &::after {
+          width: 100%;
+          text-align: center;
+          border-radius: 0 0 0 10px;
           bottom: 0;
+          left: 0;
+          transform: translateX(0);
           color: var(--main);
           background-color: rgba(black, 45%);
         }
