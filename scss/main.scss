@@ -1070,7 +1070,7 @@ div.presetsMenu {
   }
 }
 
-@media screen and (max-height: 640px) and (orientation: landscape) {
+@media screen and (max-height: 640px) and (min-aspect-ratio: 13/9) {
   div.presetsMenu {
     width: 100%;
     height: 100%;
