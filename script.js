@@ -10,6 +10,7 @@ var filters = {},
     },
     constructed = {},
     target;
+
 const sliderControl = document.getElementById('sliderControl');
 
 const addEffectBtn = document.getElementById('addEffectBtn');
@@ -141,6 +142,7 @@ function imgLoaded() {
         drawWidth - 40, canvHeight - 40);
     };
   };
+  saveBtn.classList.remove('hidden');
 };
 
 const controlsDiv = document.getElementById('controlsInit');
@@ -378,12 +380,15 @@ function destroyFilters() {
 const saveBtn = document.getElementById('saveBtn');
 
 saveBtn.addEventListener('click', function(e) {
-  if(main.classList.contains('hasimg')) {
+  if(saveBtn.classList.contains('hidden')) {
     e.preventDefault();
+  } else {
+    e.preventDefault();
+
     var cropped = trimCanvas(canvas);
     let downloadLink = document.createElement('a');
 
-    downloadLink.setAttribute('download', 'Filterr.png');
+    downloadLink.setAttribute('download', 'filterr.png');
 
     cropped.toBlob(function(blob) {
       let url = URL.createObjectURL(blob);
@@ -391,8 +396,6 @@ saveBtn.addEventListener('click', function(e) {
       downloadLink.setAttribute('href', url);
       downloadLink.click();
     });
-  } else {
-    e.preventDefault();
   }
 }, false);
 

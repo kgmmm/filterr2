@@ -151,6 +151,10 @@ header {
     & label.uploadBtn,
     & button.saveBtn {
       margin: 0 5px;
+
+      &.hidden {
+        display: none;
+      }
     }
 
     & input[type="file"]#uploadBtn {
