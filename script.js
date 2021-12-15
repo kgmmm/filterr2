@@ -9,7 +9,8 @@ var filters = {},
       Sepia: [0, 100, 0]
     },
     constructed = {},
-    target;
+    target,
+    currentSelectedFilter;
 
 const sliderControl = document.getElementById('sliderControl');
 
@@ -304,6 +305,7 @@ function applyFilters() {
         filterString = filterStringValues.join(' ');
 
   redrawImage(filterString);
+  currentSelectedFilter = filterString;
 };
 
 function redrawImage(contextFilter) {
@@ -385,12 +387,12 @@ saveBtn.addEventListener('click', function(e) {
   } else {
     e.preventDefault();
 
-    var cropped = trimCanvas(canvas);
+    var downloadImg = createDownloadImg(img);
     let downloadLink = document.createElement('a');
 
     downloadLink.setAttribute('download', 'filterr.png');
 
-    cropped.toBlob(function(blob) {
+    downloadImg.toBlob(function(blob) {
       let url = URL.createObjectURL(blob);
 
       downloadLink.setAttribute('href', url);
@@ -399,63 +401,18 @@ saveBtn.addEventListener('click', function(e) {
   }
 }, false);
 
-function trimCanvas(c) {
-  var ctx = c.getContext('2d'),
-      copy = document.createElement('canvas').getContext('2d'),
-      pixels = ctx.getImageData(0, 0, c.width, c.height),
-      l = pixels.data.length,
-      i,
-      bound = {
-          top: null,
-          left: null,
-          right: null,
-          bottom: null
-      },
-      x, y;
-  
-  // Iterate over every pixel to find the highest
-  // and where it ends on every axis ()
-  for (i = 0; i < l; i += 4) {
-      if (pixels.data[i + 3] !== 0) {
-          x = (i / 4) % c.width;
-          y = ~~((i / 4) / c.width);
+function createDownloadImg(img) {
+  const newCanv = document.createElement('canvas'),
+        newContext = newCanv.getContext('2d');
 
-          if (bound.top === null) {
-              bound.top = y;
-          };
+  newCanv.width = img.naturalWidth;
+  newCanv.height = img.naturalHeight;
 
-          if (bound.left === null) {
-              bound.left = x;
-          } else if (x < bound.left) {
-              bound.left = x;
-          };
+  newContext.filter = currentSelectedFilter;
+  newContext.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 
-          if (bound.right === null) {
-              bound.right = x;
-          } else if (bound.right < x) {
-              bound.right = x;
-          };
-
-          if (bound.bottom === null) {
-              bound.bottom = y;
-          } else if (bound.bottom < y) {
-              bound.bottom = y;
-          };
-      };
-  };
-  
-  // Calculate the height and width of the content
-  var trimHeight = bound.bottom - bound.top + 1,
-      trimWidth = bound.right - bound.left + 1,
-      trimmed = ctx.getImageData(bound.left, bound.top, trimWidth, trimHeight);
-
-  copy.canvas.width = trimWidth;
-  copy.canvas.height = trimHeight;
-  copy.putImageData(trimmed, 0, 0);
-
-  // Return trimmed canvas
-  return copy.canvas;
-};
+  return newContext.canvas;
+}
 
 const resetAllBtn = document.getElementById('resetAllBtn'),
       resetModal = document.getElementById('resetModal');
