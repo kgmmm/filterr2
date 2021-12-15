@@ -522,6 +522,14 @@ div.controls {
       opacity: 0%;
       visibility: hidden;
 
+      & div.sliderWrap {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        position: relative;
+      }
+
       & input[type="range"]#sliderControl {
         width: 100%;
       }
@@ -534,7 +542,7 @@ div.controls {
         background: var(--accent);
         border-radius: 5px;
         position: absolute;
-        top: -35px;
+        top: -28px;
         left: 50%;
         transform: translateX(-50%) translateY(-10px);
         pointer-events: none;
@@ -543,6 +551,19 @@ div.controls {
         visibility: hidden;
         transition: opacity var(--timing) ease-in-out,
           transform var(--timing) ease-in-out;
+
+        &::before {
+          content: "";
+          width: 0;
+          height: 0;
+          border: solid 8px transparent;
+          border-top-color: var(--accent);
+          position: absolute;
+          bottom: -16px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: -1;
+        }
       }
     }
   }
