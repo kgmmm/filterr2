@@ -10,7 +10,8 @@ var filters = {},
     },
     constructed = {},
     target,
-    currentSelectedFilter;
+    currentSelectedFilter,
+    currentPreviewFilter;
 
 const sliderControl = document.getElementById('sliderControl');
 
@@ -30,7 +31,15 @@ var resizeEvt;
 const main = document.getElementById('main'),
       canvas = document.getElementById('imgcanv');
 
-window.addEventListener('load', resizeCanv(), false);
+window.addEventListener('load', function() {
+  resizeCanv();
+
+  for(var key in localStorage) {
+    if(key.substring(0, 6) == 'USRPRE') {
+      createNewUSRPRE(key.substring(6), localStorage[key], false);
+    };
+  };
+}, false);
 
 function resizeCanv() {
   canvas.width = window.innerWidth;
@@ -377,6 +386,8 @@ function destroyFilters() {
   for(var key in constructed) {
     delete constructed[key];
   };
+  currentSelectedFilter = '';
+  currentPreviewFilter = '';
 };
 
 const saveBtn = document.getElementById('saveBtn');
@@ -387,7 +398,7 @@ saveBtn.addEventListener('click', function(e) {
   } else {
     e.preventDefault();
 
-    var downloadImg = createDownloadImg(img);
+    var downloadImg = createDownloadImg(img, currentSelectedFilter, false);
     let downloadLink = document.createElement('a');
 
     downloadLink.setAttribute('download', 'filterr.png');
@@ -401,16 +412,50 @@ saveBtn.addEventListener('click', function(e) {
   }
 }, false);
 
-function createDownloadImg(img) {
+function createDownloadImg(img, filterToAdd, doResize) {
   const newCanv = document.createElement('canvas'),
         newContext = newCanv.getContext('2d');
 
-  newCanv.width = img.naturalWidth;
-  newCanv.height = img.naturalHeight;
+  if(doResize == true) {
+    if(img.naturalWidth > img.naturalHeight) {
+      let ratio = img.naturalWidth / img.naturalHeight,
+          newHeight = 500 / ratio;
 
-  newContext.filter = currentSelectedFilter;
-  newContext.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+      newCanv.width = 500;
+      newCanv.height = newHeight;
 
+      newContext.imageSmoothingEnabled = true;
+      newContext.filter = filterToAdd;
+      newContext.drawImage(img, 0, 0, 500, newHeight);
+    } else if(img.naturalWidth < img.naturalHeight) {
+      let ratio = img.naturalHeight / img.naturalWidth,
+          newWidth = 500 / ratio;
+
+      newCanv.height = 500;
+      newCanv.width = newWidth;
+
+      newContext.imageSmoothingEnabled = true;
+      newContext.filter = filterToAdd;
+      newContext.drawImage(img, 0, 0, newWidth, 500);
+    } else {
+      newContext.height = 500;
+      newCanv.width = 500;
+
+      newContext.imageSmoothingEnabled = true;
+      newContext.filter = filterToAdd;
+      newContext.drawImage(img, 0, 0, 500, 500);
+    };
+  } else if(doResize == false) {
+    newCanv.width = img.naturalWidth;
+    newCanv.height = img.naturalHeight;
+
+
+    newContext.imageSmoothingEnabled = false;
+    newContext.filter = filterToAdd;
+    newContext.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+  } else {
+    return false;
+  };
   return newContext.canvas;
 }
 
@@ -460,9 +505,18 @@ const presetsBtn = document.getElementById('presetsBtn'),
       presetListItems = document.querySelectorAll('li#preset'),
       userPresetNewBtn = document.getElementById('userPresetNewBtn'),
       userPresetPlaceholder = document.getElementById('userPresetPlaceholder'),
-      menuContentWrapper = document.getElementById('menuContentWrapper');
+      menuContentWrapper = document.getElementById('menuContentWrapper'),
+      presetPreviewImg = document.getElementById('presetPreviewImg');
 
 presetsBtn.addEventListener('click', function() {
+  setPreview(currentSelectedFilter);
+
+  const anyActive = document.querySelector('.active');
+
+  if(anyActive != null) {
+    anyActive.classList.remove('active');
+  };
+
   if(Object.keys(constructed).length > 0) {
     userPresetNewBtn.style.display = 'grid';
   } else {
@@ -478,14 +532,19 @@ presetsBtn.addEventListener('click', function() {
     };
   });
 
-  for(var key in localStorage) {
-    if(key.substring(0, 6) == 'USRPRE') {
-      createNewUSRPRE(key.substring(6), localStorage[key]);
-    };
-  };
-
   presetsMenu.classList.add('open');
 }, false);
+
+function setPreview(filterTarget) {
+  currentPreviewFilter = filterTarget;
+
+  var updatePreviewImg = createDownloadImg(img, currentPreviewFilter, true),
+      newDataURL = updatePreviewImg.toDataURL();
+
+  if(presetPreviewImg.style.backgroundImage != 'url(' + newDataURL + ')') {
+    presetPreviewImg.style.backgroundImage = 'url(' + newDataURL + ')';
+  };
+};
 
 presetListItems.forEach(item => {
   item.addEventListener('click', function() {
@@ -507,7 +566,11 @@ function listItemClick(item) {
     sibling.classList.remove('active');
   });
 
-  console.log(presetID); // preview the filter
+  if(item.classList.contains('userPreset')) {
+    setPreview(localStorage['USRPRE' + presetID]);
+  } else {
+    setPreview(presets[presetID]);
+  };
 };
 
 const newPresetNameInput = document.getElementById('newPresetName'),
@@ -524,11 +587,15 @@ function checkName() {
   };
 };
 
-const newPresetPrint = document.getElementById('newPresetPrint');
+const newPresetPrint = document.getElementById('newPresetPrint'),
+      previewToggle = document.getElementById('previewToggle');
 
 userPresetNewBtn.addEventListener('click', function() {
   const rawConstructed = Object.values(constructed),
         fullString = rawConstructed.join(' ');
+
+  previewToggle.classList.remove('previewOff');
+  setPreview(currentSelectedFilter);
 
   newPresetPrint.innerHTML = fullString;
   newPresetNameInput.value = '';
@@ -538,6 +605,7 @@ userPresetNewBtn.addEventListener('click', function() {
 const userPresetBackBtn = document.getElementById('userPresetBackBtn');
 
 userPresetBackBtn.addEventListener('click', function() {
+  setPreview(currentSelectedFilter);
   menuContentWrapper.classList.remove('save');
 }, false);
 
@@ -548,15 +616,27 @@ userPresetSaveBtn.addEventListener('click', function() {
   if(userPresetSaveBtn.classList.contains('disabled')) {
     return false;
   } else {
+    if(localStorage['USRPRE' + newPresetName]) {
+      alert("That name already exists. Choose a new unique name..");
+      return false;
+    }
     localStorage.setItem('USRPRE' + newPresetName, newPresetString);
-    menuContentWrapper.classList.remove('save');
+    setPreview(currentSelectedFilter);
+
+    const anyActive = document.querySelector('.active');
+
+    if(anyActive != null) {
+      anyActive.classList.remove('active');
+    };
+
     document.getElementById('newPresetName').value = '';
     newPresetPrint.innerHTML = '';
-    createNewUSRPRE(newPresetName, newPresetString);
+    createNewUSRPRE(newPresetName, newPresetString, true);
+    menuContentWrapper.classList.remove('save');
   };
 }, false);
 
-function createNewUSRPRE(name, string) {
+function createNewUSRPRE(name, string, setActive) {
   const newLi = document.createElement('li');
 
   if(userPresetPlaceholder.classList.contains('visible')) {
@@ -569,8 +649,23 @@ function createNewUSRPRE(name, string) {
   newLi.innerHTML = '<span>' + name + '</span><button class="userPresetDelete" id="userPresetDelete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></button>';
   newLi.addEventListener('click', function() { listItemClick(this) }, false);
   newLi.querySelector('.userPresetDelete').addEventListener('click', function() { deleteUserLi(this) }, false);
+
+  if(setActive) {
+    newLi.classList.add('active');
+  };
+
   presetsList.appendChild(newLi);
 };
+
+previewToggle.addEventListener('click', function() {
+  if(previewToggle.classList.contains('previewOff')) {
+    setPreview(currentSelectedFilter);
+    previewToggle.classList.remove('previewOff');
+  } else {
+    setPreview();
+    previewToggle.classList.add('previewOff');
+  };
+}, false);
 
 const userPresetDeleteBtns = document.querySelectorAll('.userPresetDelete');
 
@@ -584,6 +679,10 @@ function deleteUserLi(btn) {
   const parentLi = btn.parentNode,
         liCount = document.querySelectorAll('.userPreset'),
         presetToDelete = parentLi.getAttribute('data-presetID');
+
+  if(parentLi.classList.contains('active')) {
+    setPreview(currentSelectedFilter);
+  };
 
   parentLi.classList.add('active');
   localStorage.removeItem('USRPRE' + presetToDelete);

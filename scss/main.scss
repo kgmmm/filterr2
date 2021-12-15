@@ -8,6 +8,7 @@
   --accent: #0fb4ff;
   --dark-accent: #006fa3;
   --main-highlight: #f2fbff;
+  --red-error: #d75050;
 
   --link-color: #000;
   --link-hover: #242930;
@@ -771,11 +772,11 @@ div.presetsMenu {
         left: 50%;
         transform: translateX(-50%);
         border-radius: 5px;
-        background-size: cover;
-        background-position: center center;
+        background-size: auto 125%;
+        background-position: center;
         background-repeat: no-repeat;
 
-        background-image: url(https://images.unsplash.com/photo-1637722873821-3196d8c0f74f?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzODgyNDk5Nw&ixlib=rb-1.2.1&q=85);
+        background-image: url(../img/previewPlaceholder.png);
       }
     }
 
@@ -1009,6 +1010,8 @@ div.presetsMenu {
             }
 
             &.previewOff {
+              background-color: var(--red-error);
+              border-color: var(--red-error);
               & svg.on {
                 display: none;
               }
