@@ -405,6 +405,7 @@ saveBtn.addEventListener('click', function(e) {
     e.preventDefault();
   } else {
     e.preventDefault();
+    loader.classList.add('show');
 
     var downloadImg = createDownloadImg(img, currentSelectedFilter, false);
     let downloadLink = document.createElement('a');
@@ -416,6 +417,7 @@ saveBtn.addEventListener('click', function(e) {
 
       downloadLink.setAttribute('href', url);
       downloadLink.click();
+      loader.classList.remove('show');
     });
   }
 }, false);
