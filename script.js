@@ -176,6 +176,11 @@ filterChoices.forEach(choice => {
 
 const filterIconList = document.getElementById('filterList');
 
+filterIconList.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  filterIconList.scrollLeft += (e.deltaY + e.deltaX);
+}, false);
+
 function createIcon(choice) {
   const filterChoice = choice.innerHTML,
         filterIcons = document.querySelectorAll('.filterIcon'),
