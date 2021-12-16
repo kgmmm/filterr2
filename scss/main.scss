@@ -1087,12 +1087,15 @@ div.presetsMenu {
     cursor: pointer;
     opacity: 0%;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity var(--timing) ease-in-out,
-      transform var(--timing) ease-in-out;
+      transform var(--timing) ease-in-out, visibility var(--timing) ease-in-out;
+    user-select: none;
 
     &.show {
       opacity: 100%;
       visibility: visible;
+      pointer-events: auto;
       transform: translateX(-50%) translateY(0);
     }
 
