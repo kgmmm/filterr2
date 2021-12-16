@@ -14,9 +14,9 @@ var filters = {},
     currentSelectedFilter,
     currentPreviewFilter;
 
-const sliderControl = document.getElementById('sliderControl');
-
-const addEffectBtn = document.getElementById('addEffectBtn');
+const sliderControl = document.getElementById('sliderControl'),
+      addEffectBtn = document.getElementById('addEffectBtn'),
+      loader = document.getElementById('loader');
 
 addEffectBtn.addEventListener('click', () => {
   if(Object.keys(constructed).length > 0) {
@@ -82,6 +82,7 @@ function loadImg() {
     alert('Please select a file first!');
   } else {
     resetAll();
+    loader.classList.add('show');
     file = fileControl.files[0];
     fr = new FileReader();
     fr.onload = createImg;
@@ -153,6 +154,7 @@ function imgLoaded() {
         drawWidth - 40, canvHeight - 40);
     };
   };
+  loader.classList.remove('show');
   saveBtn.classList.remove('hidden');
 };
 
