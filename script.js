@@ -518,7 +518,17 @@ var getSiblings = function (elem) {
 
 var presets = {
       stainedOldPhoto: 'Sepia(70%) Contrast(110%) Brightness(120%)',
-      filmNegative: 'Contrast(140%) Brightness(130%) Invert(100%) Grayscale(80%)'
+      filmNegative: 'Contrast(140%) Brightness(130%) Invert(100%) Grayscale(80%)',
+      filmNegative2: 'Contrast(40%) Invert(100%) Grayscale(80%) Sepia(100%)',
+      BitofLife: 'Contrast(130%) Hue-Rotate(10deg) Saturate(120%)',
+      BlackNWhiteWash: 'Grayscale(100%) Brightness(145%) Contrast(80%)',
+      HighContrastBNW: 'Grayscale(100%) Brightness(110%) Contrast(150%)',
+      FlatWarm: 'Contrast(80%) Hue-Rotate(350deg) Saturate(150%)',
+      DoomandGloom: 'Contrast(120%) Grayscale(45%) Brightness(90%) Hue-Rotate(20deg)',
+      StiffBreeze: 'Brightness(120%) Grayscale(30%) Hue-Rotate(10deg) Contrast(80%)',
+      RawFeel: 'Saturate(150%) Contrast(70%) Brightness(80%) Hue-Rotate(350deg)',
+      SolarGlare: 'Brightness(130%) Grayscale(25%) Hue-Rotate(355deg) Contrast(90%) Saturate(120%)',
+      SoftPosterize: 'Brightness(100%) Contrast(200%) Contrast(200%) Contrast(200%) Contrast(200%) Contrast(200%) Hue-Rotate(300deg) Sepia(60%)'
     },
     userPresets = {};
 
