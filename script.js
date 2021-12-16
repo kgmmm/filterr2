@@ -64,7 +64,13 @@ window.addEventListener("resize", function() {
 
 const fileControl = document.getElementById('uploadBtn');
 
-fileControl.addEventListener('change', loadImg);
+fileControl.addEventListener('change', function() {
+  loadImg();
+}, false);
+
+fileControl.addEventListener('click', function() {
+  addEffectBtn.classList.remove('open');
+}, false);
 
 var file, fr, img;
 
@@ -214,6 +220,7 @@ const sliderToggle = document.getElementById("sliderToggle"),
       doneBtn = document.getElementById('doneBtn');
 
 function setCurrent(current, e, fallbackID) {
+  addEffectBtn.classList.remove('open');
   if(e === null) {
     const currentTarget = fallbackID;
     target = currentTarget.getAttribute('id');
@@ -410,6 +417,7 @@ saveBtn.addEventListener('click', function(e) {
     e.preventDefault();
   } else {
     e.preventDefault();
+    addEffectBtn.classList.remove('open');
     loader.classList.add('show');
 
     var downloadImg = createDownloadImg(img, currentSelectedFilter, false);
