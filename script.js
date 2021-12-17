@@ -440,34 +440,44 @@ function createDownloadImg(img, filterToAdd, doResize) {
         newContext = newCanv.getContext('2d');
 
   if(doResize == true) {
-    if(img.naturalWidth > img.naturalHeight) {
-      let ratio = img.naturalWidth / img.naturalHeight,
-          newHeight = 500 / ratio;
+    if(img.naturalWidth > 500 || img.naturalHeight > 500) {
+      if(img.naturalWidth > img.naturalHeight) {
+        let ratio = img.naturalWidth / img.naturalHeight,
+            newHeight = 500 / ratio;
 
-      newCanv.width = 500;
-      newCanv.height = newHeight;
+        newCanv.width = 500;
+        newCanv.height = newHeight;
 
-      newContext.imageSmoothingEnabled = true;
-      newContext.filter = filterToAdd;
-      newContext.drawImage(img, 0, 0, 500, newHeight);
-    } else if(img.naturalWidth < img.naturalHeight) {
-      let ratio = img.naturalHeight / img.naturalWidth,
-          newWidth = 500 / ratio;
+        newContext.imageSmoothingEnabled = true;
+        newContext.filter = filterToAdd;
+        newContext.drawImage(img, 0, 0, 500, newHeight);
+      } else if(img.naturalWidth < img.naturalHeight) {
+        let ratio = img.naturalHeight / img.naturalWidth,
+            newWidth = 500 / ratio;
 
-      newCanv.height = 500;
-      newCanv.width = newWidth;
+        newCanv.height = 500;
+        newCanv.width = newWidth;
 
-      newContext.imageSmoothingEnabled = true;
-      newContext.filter = filterToAdd;
-      newContext.drawImage(img, 0, 0, newWidth, 500);
+        newContext.imageSmoothingEnabled = true;
+        newContext.filter = filterToAdd;
+        newContext.drawImage(img, 0, 0, newWidth, 500);
+      } else {
+        newContext.height = 500;
+        newCanv.width = 500;
+
+        newContext.imageSmoothingEnabled = true;
+        newContext.filter = filterToAdd;
+        newContext.drawImage(img, 0, 0, 500, 500);
+      };
     } else {
-      newContext.height = 500;
-      newCanv.width = 500;
+      newCanv.width = img.naturalWidth;
+      newCanv.height = img.naturalHeight;
 
-      newContext.imageSmoothingEnabled = true;
+
+      newContext.imageSmoothingEnabled = false;
       newContext.filter = filterToAdd;
-      newContext.drawImage(img, 0, 0, 500, 500);
-    };
+      newContext.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+    }
   } else if(doResize == false) {
     newCanv.width = img.naturalWidth;
     newCanv.height = img.naturalHeight;
