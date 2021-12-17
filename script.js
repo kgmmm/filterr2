@@ -16,7 +16,8 @@ var filters = {},
 
 const sliderControl = document.getElementById('sliderControl'),
       addEffectBtn = document.getElementById('addEffectBtn'),
-      loader = document.getElementById('loader');
+      loader = document.getElementById('loader'),
+      filterIndicator = document.getElementById('filterIndicator');
 
 addEffectBtn.addEventListener('click', () => {
   if(Object.keys(constructed).length > 0) {
@@ -243,8 +244,6 @@ function setCurrent(current, e, fallbackID) {
 };
 
 function updateIndicator(filterName, isShow) {
-  const filterIndicator = document.getElementById('filterIndicator');
-
   if(isShow) {
     filterIndicator.classList.add('show');
   } else {
@@ -397,6 +396,7 @@ function resetAll() {
   document.getElementById('controlsInit').classList.add('empty');
   document.getElementById('filterList').innerHTML = '';
   document.getElementById('sliderToggle').classList.remove('slider');
+  filterIndicator.classList.remove('show');
 };
 
 function destroyFilters() {
